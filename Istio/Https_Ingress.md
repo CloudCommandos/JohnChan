@@ -1,4 +1,12 @@
-
+## Prerequisite
+Make sure that your Istio setup was initialized using the default profile with TLS flags
+```bash
+istioctl manifest apply \
+  --set values.gateways.istio-ingressgateway.sds.enabled=true \
+  --set values.global.k8sIngress.enabled=true \
+  --set values.global.k8sIngress.enableHttps=true \
+  --set values.global.k8sIngress.gatewayName=ingressgateway
+```
 
 ## Side Car Injection
 Option 1: Label namespace accordingly for the Istio sidecar injector to inject sidecar containers into the corresponding pods  
@@ -32,7 +40,7 @@ spec:
 EOF
 ```
 
-Create Virtual Service to route traffic coming into that gateway
+## Create Virtual Service
 ```bash
 kubectl apply -f - <<EOF
 apiVersion: networking.istio.io/v1alpha3
@@ -57,6 +65,7 @@ spec:
 EOF
 ```
 
+## TLS Cert Creation
 Create root cert
 ```bash
 apt-get install -y openssl
