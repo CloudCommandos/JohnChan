@@ -1,5 +1,6 @@
 ## Prerequisite
-Make sure that your Istio setup was initialized using the default profile with TLS flags
+Make sure that your Istio setup was initialized using the default profile with TLS flags.
+Secret Discovery Service (SDS) allows Istio to retrieve certs from K8s secrets and inject them into your containers.
 ```bash
 istioctl manifest apply \
   --set values.gateways.istio-ingressgateway.sds.enabled=true \
@@ -95,6 +96,7 @@ kubectl create -n istio-system secret tls confluence-gateway-cert \
 --cert confluence.sunnyburst.com.crt
 ```
 
+## Checks
 Optional: Check missing ingress gateway listeners
 ```bash
 istioctl proxy-config listeners -n istio-system <your_istio_ingressgateway_podname>
