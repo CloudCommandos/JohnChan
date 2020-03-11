@@ -1,6 +1,6 @@
 ## Nessus Scan Summary
-### New Vulnerabilities (None: 398, Low: 5, Critical: 1, Medium: 31, High: 0)
-#### Risk: High (0) 
+### New Vulnerabilities (None: 398, Low: 5, Critical: 1, Medium: 31, -: 0)
+#### Risk: High (undefined) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
 | - | - | - | - | - | - | - |
@@ -297,24 +297,28 @@
 
 ---
 
-### Removed Vulnerabilities (None: 1, Low: 1, Critical: 0, Medium: 1, High: 1)
-#### Risk: Medium (1) 
+### Removed Vulnerabilities (None: 0, Low: 0, Critical: 0, Medium: 0, -: 1)
+#### Risk: High (undefined) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | -/-  [Old 2] | Removed | - | - |
-#### Risk: Low (1) 
+| - | - | - | - | - | - | - |
+#### Risk: Medium (0) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | -/-  [Old 4] | Removed | - | - |
-#### Risk: None (1) 
+| - | - | - | - | - | - | - |
+#### Risk: Low (0) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | -/-  [Old 1] | Removed | Accepted | - |
+| - | - | - | - | - | - | - |
+#### Risk: None (0) 
+| Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
+| --- | --- | --- | --- | --- | --- | --- |
+| - | - | - | - | - | - | - |
 
 ---
 
-### Same Vulnerabilities (None: 0, Low: 0, Critical: 0, Medium: 0, High: 0)
-#### Risk: High (0) 
+### Same Vulnerabilities (None: 0, Low: 0, Critical: 0, Medium: 0, -: 0)
+#### Risk: High (undefined) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
 | - | - | - | - | - |
