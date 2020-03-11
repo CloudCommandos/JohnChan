@@ -321,19 +321,19 @@
 #### Risk: High (0) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - |
+| - | - | - | - | - | - | - |
 #### Risk: Medium (0) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - |
+| - | - | - | - | - | - | - |
 #### Risk: Low (0) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - |
+| - | - | - | - | - | - | - |
 #### Risk: None (0) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - |
+| - | - | - | - | - | - | - |
 
 ---
 
