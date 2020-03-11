@@ -11,7 +11,7 @@
 | DNS Server Cache Snooping Remote Information Disclosure | 12217 | core-svcs1.cc.com | udp/53  [New 56] | New | Accepted | Internal usage |
 | DNS Server Cache Snooping Remote Information Disclosure | 12217 | lb1.cc.com | udp/53  [New 369] | New | Accepted | Internal |
 | SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | core-svcs1.cc.com | tcp/6443  [New 82] | New | Accepted | Internal Use |
-| SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | dolly1.cc.com | tcp/6443  [New 172]<br>tcp/10250  [New 173] | New | Fixed | nano /etc/kubernetes/manifest/kube-apiserver.yaml<br>- --tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256<br>- --tls-min-version=VersionTLS12 |
+| SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | dolly1.cc.com | tcp/6443  [New 172]<br>tcp/10250  [New 173] | New | Fixed | nano /etc/kubernetes/manifest/kube-apiserver.yaml<br>- --tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256<br>- --tls-min-version=VersionTLS12<br><br>nano /var/lib/kubelet/config.yaml<br>tlsMinVersion: VersionTLS12 <br> tlsCipherSuites: ['TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256','TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384','TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256'] |
 | SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | dolly4.cc.com | tcp/10250  [New 255] | New | - | - |
 | SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | etcd1.cc.com | tcp/2379  [New 311]<br>tcp/2380  [New 312] | New | - | - |
 | SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | lb1.cc.com | tcp/6443  [New 395] | New | - | - |
