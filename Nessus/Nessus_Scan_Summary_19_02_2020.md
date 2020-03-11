@@ -6,11 +6,11 @@ Old Scan: NONE
 #### Risk: Critical (1)
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| Unix Operating System Unsupported Version Detection | 33850 | 10.0.1.5 | tcp/0 [New 24] | New | - | - |
+| Unix Operating System Unsupported Version Detection | 33850 | 10.0.1.5 | tcp/0 [New 24] | New | KIV | See if OPNSense will fix this |
 #### Risk: Medium (31) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| Network Time Protocol (NTP) Mode 6 Scanner | 97861 | 10.0.1.5 | udp/123  [New 30] | New | KIV | See if Nessus Update will fix this |
+| Network Time Protocol (NTP) Mode 6 Scanner | 97861 | 10.0.1.5 | udp/123  [New 30] | New | KIV | See if OPNSense Update will fix this |
 | DNS Server Cache Snooping Remote Information Disclosure | 12217 | core-svcs1.cc.com | udp/53  [New 56] | New | Accepted | Internal usage |
 | DNS Server Cache Snooping Remote Information Disclosure | 12217 | lb1.cc.com | udp/53  [New 369] | New | Accepted | Internal |
 | SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | core-svcs1.cc.com | tcp/6443  [New 82] | New | Accepted | Internal Use |
