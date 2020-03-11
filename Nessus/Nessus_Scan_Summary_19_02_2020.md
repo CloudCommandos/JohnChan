@@ -28,8 +28,8 @@
 | SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | dolly1.cc.com | tcp/30626  [New 196] | New | Accepted | kube-proxy: Internal usage |
 | SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | dolly4.cc.com | tcp/30626  [New 274] | New | Accepted | kube-proxy: Internal usage |
 | SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | lb1.cc.com | tcp/25  [New 412] | New | Fixed | nano /etc/postfix/main.cf<br><br>smtpd_tls_mandatory_protocols = !SSLv2,!SSLv3,!TLSv1<br>smtp_tls_mandatory_protocols  = !SSLv2,!SSLv3,!TLSv1<br>smtpd_tls_protocols           = !SSLv2,!SSLv3,!TLSv1<br>smtp_tls_protocols            = !SSLv2,!SSLv3,!TLSv1<br>smtpd_tls_security_level = encrypt<br>smtp_tls_security_level  = encrypt<br>smtpd_tls_exclude_ciphers = aNULL, LOW, EXP, MEDIUM, ADH, AECDH, MD5, DSS, ECDSA, CAMELLIA128, 3DES, CAMELLIA256,RSA+AES, eNULL |
-| SSL Certificate with Wrong Hostname | 45411 | dolly1.cc.com | tcp/30626  [New 181] | New | - | - |
-| SSL Certificate with Wrong Hostname | 45411 | dolly4.cc.com | tcp/30626  [New 262] | New | - | - |
+| SSL Certificate with Wrong Hostname | 45411 | dolly1.cc.com | tcp/30626  [New 181] | New | Accepted | Internal usage |
+| SSL Certificate with Wrong Hostname | 45411 | dolly4.cc.com | tcp/30626  [New 262] | New | Accepted | Internal usage |
 #### Risk: Low (5) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
