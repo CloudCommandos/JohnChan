@@ -1,5 +1,43 @@
 ## Nessus Scan Summary
-### New Vulnerabilities (None: 398, Low: 5, Critical: 1, Medium: 31)
+### New Vulnerabilities (None: 398, Low: 5, Critical: 1, Medium: 31, High: 0)
+#### Risk: High (0) 
+| Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
+| --- | --- | --- | --- | --- | --- | --- |
+| - | - | - | - | - | - | - |
+#### Risk: Medium (31) 
+| Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
+| --- | --- | --- | --- | --- | --- | --- |
+| Network Time Protocol (NTP) Mode 6 Scanner | 97861 | 10.0.1.5 | udp/123  [New 30] | New | - | - |
+| DNS Server Cache Snooping Remote Information Disclosure | 12217 | core-svcs1.cc.com | udp/53  [New 56] | New | - | - |
+| DNS Server Cache Snooping Remote Information Disclosure | 12217 | lb1.cc.com | udp/53  [New 369] | New | - | - |
+| SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | core-svcs1.cc.com | tcp/6443  [New 82] | New | - | - |
+| SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | dolly1.cc.com | tcp/6443  [New 172]<br>tcp/10250  [New 173] | New | - | - |
+| SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | dolly4.cc.com | tcp/10250  [New 255] | New | - | - |
+| SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | etcd1.cc.com | tcp/2379  [New 311]<br>tcp/2380  [New 312] | New | - | - |
+| SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | lb1.cc.com | tcp/6443  [New 395] | New | - | - |
+| SSL Certificate Cannot Be Trusted | 51192 | core-svcs1.cc.com | tcp/25  [New 93]<br>tcp/6443  [New 94] | New | - | - |
+| SSL Certificate Cannot Be Trusted | 51192 | dolly1.cc.com | tcp/6443  [New 185]<br>tcp/10250  [New 186]<br>tcp/30626  [New 187] | New | - | - |
+| SSL Certificate Cannot Be Trusted | 51192 | dolly4.cc.com | tcp/10250  [New 266]<br>tcp/30626  [New 267] | New | - | - |
+| SSL Certificate Cannot Be Trusted | 51192 | etcd1.cc.com | tcp/2379  [New 314]<br>tcp/2380  [New 315] | New | - | - |
+| SSL Certificate Cannot Be Trusted | 51192 | lb1.cc.com | tcp/25  [New 405]<br>tcp/6443  [New 406] | New | - | - |
+| SSL Self-Signed Certificate | 57582 | core-svcs1.cc.com | tcp/25  [New 99] | New | - | - |
+| SSL Self-Signed Certificate | 57582 | dolly1.cc.com | tcp/10250  [New 195] | New | - | - |
+| SSL Self-Signed Certificate | 57582 | dolly4.cc.com | tcp/10250  [New 273] | New | - | - |
+| SSL Self-Signed Certificate | 57582 | lb1.cc.com | tcp/25  [New 411] | New | - | - |
+| SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | core-svcs1.cc.com | tcp/25  [New 100] | New | - | - |
+| SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | dolly1.cc.com | tcp/30626  [New 196] | New | - | - |
+| SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | dolly4.cc.com | tcp/30626  [New 274] | New | - | - |
+| SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | lb1.cc.com | tcp/25  [New 412] | New | - | - |
+| SSL Certificate with Wrong Hostname | 45411 | dolly1.cc.com | tcp/30626  [New 181] | New | - | - |
+| SSL Certificate with Wrong Hostname | 45411 | dolly4.cc.com | tcp/30626  [New 262] | New | - | - |
+#### Risk: Low (5) 
+| Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
+| --- | --- | --- | --- | --- | --- | --- |
+| SSH Server CBC Mode Ciphers Enabled | 70658 | 10.0.1.222 | tcp/22  [New 12] | New | - | - |
+| Web Server Transmits Cleartext Credentials | 26194 | core-svcs1.cc.com | tcp/8900  [New 71] | New | - | - |
+| Web Server Transmits Cleartext Credentials | 26194 | lb1.cc.com | tcp/8900  [New 384] | New | - | - |
+| SSL Anonymous Cipher Suites Supported | 31705 | core-svcs1.cc.com | tcp/25  [New 72] | New | - | - |
+| SSL Anonymous Cipher Suites Supported | 31705 | lb1.cc.com | tcp/25  [New 385] | New | - | - |
 #### Risk: None (398) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -259,15 +297,15 @@
 
 ---
 
-### Removed Vulnerabilities (None: 1, Low: 0, Critical: 0, Medium: 0)
-#### Risk: Medium (0) 
+### Removed Vulnerabilities (None: 1, Low: 1, Critical: 0, Medium: 1, High: 1)
+#### Risk: Medium (1) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - |
-#### Risk: Low (0) 
+| - | - | - | -/-  [Old 2] | Removed | - | - |
+#### Risk: Low (1) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - |
+| - | - | - | -/-  [Old 4] | Removed | - | - |
 #### Risk: None (1) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -275,7 +313,19 @@
 
 ---
 
-### Same Vulnerabilities (None: 0, Low: 0, Critical: 0, Medium: 0)
+### Same Vulnerabilities (None: 0, Low: 0, Critical: 0, Medium: 0, High: 0)
+#### Risk: High (0) 
+| Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
+| --- | --- | --- | --- | --- | --- | --- |
+| - | - | - | - | - |
+#### Risk: Medium (0) 
+| Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
+| --- | --- | --- | --- | --- | --- | --- |
+| - | - | - | - | - |
+#### Risk: Low (0) 
+| Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
+| --- | --- | --- | --- | --- | --- | --- |
+| - | - | - | - | - |
 #### Risk: None (0) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
