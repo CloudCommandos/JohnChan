@@ -3,10 +3,10 @@ New Scan: ESTL Scan Policy (NEW), February 19 at 1:55 PM
 Old Scan: NONE
 
 ### New Vulnerabilities (None: 398, Low: 5, Critical: 1, Medium: 31)
-#### Risk: High (0) 
+#### Risk: Critical (1)
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - |
+| Unix Operating System Unsupported Version Detection | 33850 | 10.0.1.5 | tcp/0 [New 24] | New | - | - |
 #### Risk: Medium (31) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
