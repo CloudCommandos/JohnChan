@@ -14,16 +14,16 @@
 | SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | dolly1.cc.com | tcp/6443  [New 172]<br>tcp/10250  [New 173] | New | Fixed | nano /etc/kubernetes/manifest/kube-apiserver.yaml<br>- --tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256<br>- --tls-min-version=VersionTLS12<br><br>nano /var/lib/kubelet/config.yaml<br>tlsMinVersion: VersionTLS12 <br> tlsCipherSuites: ['TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256','TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384','TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256'] |
 | SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | dolly4.cc.com | tcp/10250  [New 255] | New | Fixed | nano /var/lib/kubelet/config.yaml<br>tlsMinVersion: VersionTLS12 <br> tlsCipherSuites: ['TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256','TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384','TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256'] |
 | SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | etcd1.cc.com | tcp/2379  [New 311]<br>tcp/2380  [New 312] | New | Fixed | nano /etc/kubernetes/manifest/etcd.yaml<br>- --tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256<br>- --tls-min-version=VersionTLS12 |
-| SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | lb1.cc.com | tcp/6443  [New 395] | New | - | - |
-| SSL Certificate Cannot Be Trusted | 51192 | core-svcs1.cc.com | tcp/25  [New 93]<br>tcp/6443  [New 94] | New | - | - |
-| SSL Certificate Cannot Be Trusted | 51192 | dolly1.cc.com | tcp/6443  [New 185]<br>tcp/10250  [New 186]<br>tcp/30626  [New 187] | New | - | - |
-| SSL Certificate Cannot Be Trusted | 51192 | dolly4.cc.com | tcp/10250  [New 266]<br>tcp/30626  [New 267] | New | - | - |
-| SSL Certificate Cannot Be Trusted | 51192 | etcd1.cc.com | tcp/2379  [New 314]<br>tcp/2380  [New 315] | New | - | - |
-| SSL Certificate Cannot Be Trusted | 51192 | lb1.cc.com | tcp/25  [New 405]<br>tcp/6443  [New 406] | New | - | - |
-| SSL Self-Signed Certificate | 57582 | core-svcs1.cc.com | tcp/25  [New 99] | New | - | - |
-| SSL Self-Signed Certificate | 57582 | dolly1.cc.com | tcp/10250  [New 195] | New | - | - |
-| SSL Self-Signed Certificate | 57582 | dolly4.cc.com | tcp/10250  [New 273] | New | - | - |
-| SSL Self-Signed Certificate | 57582 | lb1.cc.com | tcp/25  [New 411] | New | - | - |
+| SSL Medium Strength Cipher Suites Supported (SWEET32) | 42873 | lb1.cc.com | tcp/6443  [New 395] | New | Fixed | Fixed K8s API-Server SWEET32 |
+| SSL Certificate Cannot Be Trusted | 51192 | core-svcs1.cc.com | tcp/25  [New 93]<br>tcp/6443  [New 94] | New | Accepted | Internal usage |
+| SSL Certificate Cannot Be Trusted | 51192 | dolly1.cc.com | tcp/6443  [New 185]<br>tcp/10250  [New 186]<br>tcp/30626  [New 187] | New | Accpeted | Internal usage |
+| SSL Certificate Cannot Be Trusted | 51192 | dolly4.cc.com | tcp/10250  [New 266]<br>tcp/30626  [New 267] | New | Accepted | Internal usage |
+| SSL Certificate Cannot Be Trusted | 51192 | etcd1.cc.com | tcp/2379  [New 314]<br>tcp/2380  [New 315] | New | Accepted | Internal usage |
+| SSL Certificate Cannot Be Trusted | 51192 | lb1.cc.com | tcp/25  [New 405]<br>tcp/6443  [New 406] | New | Accepted | Internal usage |
+| SSL Self-Signed Certificate | 57582 | core-svcs1.cc.com | tcp/25  [New 99] | New | Accepted | Internal usage |
+| SSL Self-Signed Certificate | 57582 | dolly1.cc.com | tcp/10250  [New 195] | New | Accepted | Internal usage |
+| SSL Self-Signed Certificate | 57582 | dolly4.cc.com | tcp/10250  [New 273] | New | Accepted | Internal usage |
+| SSL Self-Signed Certificate | 57582 | lb1.cc.com | tcp/25  [New 411] | New | Accepted | Internal usage |
 | SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | core-svcs1.cc.com | tcp/25  [New 100] | New | - | - |
 | SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | dolly1.cc.com | tcp/30626  [New 196] | New | - | - |
 | SSL/TLS Protocol Initialization Vector Implementation Information Disclosure Vulnerability (BEAST) | 58751 | dolly4.cc.com | tcp/30626  [New 274] | New | - | - |
