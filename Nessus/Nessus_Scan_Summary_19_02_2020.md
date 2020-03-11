@@ -1,6 +1,6 @@
 ## Nessus Scan Summary 19_02_2020
-New Scan: ESTL Scan Policy (NEW), February 19 at 1:55 PM
-Old Scan: NONE
+New Scan: ESTL Scan Policy (NEW), February 19 at 1:55 PM  
+Old Scan: NONE  
 
 ### New Vulnerabilities (None: 398, Low: 5, Critical: 1, Medium: 31)
 #### Risk: Critical (1)
