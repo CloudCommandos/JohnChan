@@ -36,7 +36,7 @@ Old Scan: NONE
 #### Risk: Low (5) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| SSH Server CBC Mode Ciphers Enabled | 70658 | 10.0.1.222 | tcp/22  [New 12] | New | - | - |
+| SSH Server CBC Mode Ciphers Enabled | 70658 | 10.0.1.222 | tcp/22  [New 12] | New | Fixed | nano /etc/crypto-policies/back-ends/opensshserver.config<br># Remove all cbc ciphers |
 | Web Server Transmits Cleartext Credentials | 26194 | core-svcs1.cc.com | tcp/8900  [New 71] | New | - | - |
 | Web Server Transmits Cleartext Credentials | 26194 | lb1.cc.com | tcp/8900  [New 384] | New | - | - |
 | SSL Anonymous Cipher Suites Supported | 31705 | core-svcs1.cc.com | tcp/25  [New 72] | New | - | - |
