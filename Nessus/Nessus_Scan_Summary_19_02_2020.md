@@ -49,8 +49,8 @@ Old Scan: NONE
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
 | SSH Server CBC Mode Ciphers Enabled | 70658 | 10.0.1.222 | tcp/22  [New 12] | New | Fixed | nano /etc/crypto-policies/back-ends/opensshserver.config<br># Remove all cbc ciphers |
-| Web Server Transmits Cleartext Credentials | 26194 | core-svcs1.cc.com | tcp/8900  [New 71] | New | - | - |
-| Web Server Transmits Cleartext Credentials | 26194 | lb1.cc.com | tcp/8900  [New 384] | New | - | - |
+| Web Server Transmits Cleartext Credentials | 26194 | core-svcs1.cc.com | tcp/8900  [New 71] | New | Fixed | gitlab-ctl uninstall;<br>gitlab-ctl cleanse;<br>gitlab-ctl remove-accounts;<br>dpkg -P gitlab-ee;<br>rm -rf /opt/gitlab; |
+| Web Server Transmits Cleartext Credentials | 26194 | lb1.cc.com | tcp/8900  [New 384] | New | Fixed | core-svcs1 and core-svc2 were assuming virtual IP 10.0.1.99, which is the interface ip for lb1. Removed heartbeat and related configurations from core-svcs |
 | SSL Anonymous Cipher Suites Supported | 31705 | core-svcs1.cc.com | tcp/25  [New 72] | New | Fixed | gitlab-ctl uninstall;<br>gitlab-ctl cleanse;<br>gitlab-ctl remove-accounts;<br>dpkg -P gitlab-ee;<br>rm -rf /opt/gitlab; |
 | SSL Anonymous Cipher Suites Supported | 31705 | lb1.cc.com | tcp/25  [New 385] | New | Fixed | core-svcs1 and core-svc2 were assuming virtual IP 10.0.1.99, which is the interface ip for lb1. Removed heartbeat and related configurations from core-svcs |
 #### Risk: None (398) 
