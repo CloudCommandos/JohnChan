@@ -2,6 +2,8 @@
 New Scan: ESTL Scan Policy (NEW), February 19 at 1:55 PM  
 Old Scan: NONE  
 
+This is the first scan result for the following VMs on 19-02-2020.
+
 | IP | Hostname | Description |
 | --- | --- | --- |
 | 10.0.1.111 | dolly1 | Kubernetes master node |
@@ -312,7 +314,7 @@ Old Scan: NONE
 
 ---
 
-### Removed Vulnerabilities (None: 1, Low: 0, Critical: 0, Medium: 0)
+### Removed Vulnerabilities (None: 0, Low: 0, Critical: 0, Medium: 0)
 #### Risk: High (0) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -325,10 +327,10 @@ Old Scan: NONE
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
 | - | - | - | - | - | - | - |
-#### Risk: None (1) 
+#### Risk: None (0) 
 | Vulnerability | Plugin ID | Host | Affected Port(s) + [File Row]| Status | Action | Comments |
 | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | -/-  [Old 1] | Removed | - | - |
+| - | - | - | - | - | - | - |
 
 ---
 
