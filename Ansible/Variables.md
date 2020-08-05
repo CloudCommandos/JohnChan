@@ -67,7 +67,7 @@ ssh_password: "{{ vault_ssh_password }}"
 # String 
 string_var1: this is string without quotes
 string_var2: "12345"
-string_var3: \"12345\"
+string_var3: '"12345"'
 
 # Integer
 integer_var1: 12345
