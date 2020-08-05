@@ -63,6 +63,7 @@ ansible -m debug -a 'var=hostvars[inventory_hostname]' hostgroup1 -i inventory.y
 ```yaml
 string_var1: This is a string
 string_var2: 1 2 3 4 5
-integer_var: 12345
+string_var3: "12345"
+integer_var1: 12345
 
 ```
