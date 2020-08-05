@@ -1,4 +1,4 @@
-## `group_vars` directory structure
+## `group_vars` Directory Structure
 ```yaml
 ...
 group_vars/
@@ -19,7 +19,7 @@ group_vars/
         any_vault_file2.yaml
 ```
 
-## Vault protected variables
+## Vault Protected Variables
 Create an ansible-vault protected file
 ```bash
 ansible-vault create any_vault_file1.yaml
@@ -57,4 +57,12 @@ ansible -m debug -a 'var=hostvars[inventory_hostname]' YOUR_GROUP_NAME -i invent
 
 #e.g.
 ansible -m debug -a 'var=hostvars[inventory_hostname]' hostgroup1 -i inventory.yaml --ask-vault-pass -k
+```
+
+## Variable Types
+```yaml
+string_var1: This is a string
+string_var2: 1 2 3 4 5
+integer_var: 12345
+
 ```
