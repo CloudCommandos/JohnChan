@@ -38,6 +38,17 @@ Or view the vault file
 ansible-vault view any_vault_file1.yaml
 ```
 
+### SSH Variables
+You can place SSH credentials inside vault files as well
+```bash
+ansible-vault create ssh_vault.file
+```
+```yaml
+ansible_ssh_user: john
+ansible_ssh_pass: 12345
+ansible_sudo_pass: 12345
+```
+With this, you do not need to supply SSH credentials when running the playbook
 
 ## Debug
 To verify the variables of your host group
