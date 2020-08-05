@@ -61,9 +61,25 @@ ansible -m debug -a 'var=hostvars[inventory_hostname]' hostgroup1 -i inventory.y
 
 ## Variable Types
 ```yaml
-string_var1: This is a string
-string_var2: 1 2 3 4 5
-string_var3: "12345"
+# Take value from another variable
+ssh_password: "{{ vault_ssh_password }}"
+
+# String 
+string_var1: this is string without quotes
+string_var2: "12345"
+string_var3: \"12345\"
+
+# Integer
 integer_var1: 12345
 
+# Object and Array 
+object_var:
+    property1: I am string
+    property2:
+        property2A: I am property A
+        property2B: I am property B
+    property3:
+        - I
+        - am
+        - array
 ```
