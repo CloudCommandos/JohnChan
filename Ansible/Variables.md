@@ -64,7 +64,7 @@ ansible -m debug -a 'var=hostvars[inventory_hostname]' hostgroup1 -i inventory.y
 # Take value from another variable
 ssh_password: "{{ vault_ssh_password }}"
 
-# String 
+# String
 string_var1: this is string without quotes
 string_var2: "12345"
 string_var3: '"12345"'
@@ -72,7 +72,7 @@ string_var3: '"12345"'
 # Integer
 integer_var1: 12345
 
-# Object and Array 
+# Object and Array
 object_var:
     property1: I am string
     property2:
@@ -82,4 +82,15 @@ object_var:
         - I
         - am
         - array
+
+# Dictionary             
+dict_var:
+    a:
+        - 1
+        - 2
+        - 3
+    b:
+        - 4
+        - 5
+        - 6
 ```
