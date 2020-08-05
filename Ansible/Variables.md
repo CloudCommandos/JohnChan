@@ -94,3 +94,107 @@ dict_var:
         - 5
         - 6
 ```
+
+## Referencing Variables
+Sample role:
+```yaml
+- name: string_var1
+  debug:
+    msg: "Variable `string_var1` is : {{ string_var1 }}"
+
+- name: string_var2
+  debug:
+    msg: "Variable `string_var2` is : {{ string_var2 }}"
+
+- name: string_var3
+  debug:
+    msg: "Variable `string_var3` is : {{ string_var3 }}"
+
+- name: integer_var1
+  debug:
+    msg: "Variable `integer_var1` is : {{ integer_var1 }}"
+
+- name: object_var array prop
+  debug:
+    msg: "Variable `object_var` has array property with value: {{ item }}"
+  loop: "{{ object_var.property3 }}"
+
+- name: dict_var with_dict
+  debug:
+    msg: "{{ item.key }} -- {{ item.value }}"
+  with_dict:
+    - "{{ dict_var }}"
+
+- name: flatten dict_var array
+  set_fact:
+      flattened_dict_var: |
+          {% set res = [] -%}
+          {% for key in dict_var.keys() -%}
+              {% for value in dict_var[key] -%}
+                  {% set ignored = res.extend([{'key': key, 'value':value}]) -%}
+              {%- endfor %}
+          {%- endfor %}
+          {{ res }}
+
+- name: flattened dict_var array
+  debug:
+      msg: "{{ item.key }} {{ item.value }}"
+  with_items: "{{ flattened_dict_var }}"
+```
+
+Output:
+```yaml
+TASK [test-variables : string_var1] ***************************************************************************************************************************************************************************************************************************************************************************************ok: [127.0.0.1] => {
+    "msg": "Variable `string_var1` is : this is string without quotes"
+}
+
+TASK [test-variables : string_var2] ***************************************************************************************************************************************************************************************************************************************************************************************ok: [127.0.0.1] => {
+    "msg": "Variable `string_var2` is : 12345"
+}
+
+TASK [test-variables : string_var3] ***************************************************************************************************************************************************************************************************************************************************************************************ok: [127.0.0.1] => {
+    "msg": "Variable `string_var3` is : \"12345\""
+}
+
+TASK [test-variables : integer_var1] **************************************************************************************************************************************************************************************************************************************************************************************ok: [127.0.0.1] => {
+    "msg": "Variable `integer_var1` is : 12345"
+}
+
+TASK [test-variables : object_var array prop] *****************************************************************************************************************************************************************************************************************************************************************************ok: [127.0.0.1] => (item=I) => {
+    "msg": "Variable `object_var` has array property with value: I"
+}
+ok: [127.0.0.1] => (item=am) => {
+    "msg": "Variable `object_var` has array property with value: am"
+}
+ok: [127.0.0.1] => (item=array) => {
+    "msg": "Variable `object_var` has array property with value: array"
+}
+
+TASK [test-variables : dict_var with_dict] ********************************************************************************************************************************************************************************************************************************************************************************ok: [127.0.0.1] => (item={u'key': u'a', u'value': [1, 2, 3]}) => {
+    "msg": "a -- [1, 2, 3]"
+}
+ok: [127.0.0.1] => (item={u'key': u'b', u'value': [4, 5, 6]}) => {
+    "msg": "b -- [4, 5, 6]"
+}
+
+TASK [test-variables : flatten dict_var array] ****************************************************************************************************************************************************************************************************************************************************************************ok: [127.0.0.1] => {"ansible_facts": {"flattened_dict_var": [{"key": "a", "value": 1}, {"key": "a", "value": 2}, {"key": "a", "value": 3}, {"key": "b", "value": 4}, {"key": "b", "value": 5}, {"key": "b", "value": 6}]}, "changed": false}
+
+TASK [test-variables : flattened dict_var array] **************************************************************************************************************************************************************************************************************************************************************************ok: [127.0.0.1] => (item={u'value': 1, u'key': u'a'}) => {
+    "msg": "a 1"
+}
+ok: [127.0.0.1] => (item={u'value': 2, u'key': u'a'}) => {
+    "msg": "a 2"
+}
+ok: [127.0.0.1] => (item={u'value': 3, u'key': u'a'}) => {
+    "msg": "a 3"
+}
+ok: [127.0.0.1] => (item={u'value': 4, u'key': u'b'}) => {
+    "msg": "b 4"
+}
+ok: [127.0.0.1] => (item={u'value': 5, u'key': u'b'}) => {
+    "msg": "b 5"
+}
+ok: [127.0.0.1] => (item={u'value': 6, u'key': u'b'}) => {
+    "msg": "b 6"
+}
+```
