@@ -30,4 +30,29 @@ roles/
     msg: "Handler2 has been invoked"
 ```
 
+./roles/role1/tasks/main.yaml
+```yaml
+- name: test shell1
+  shell: echo 'hi1'
+  notify:
+    - handler3
+
+- name: test shell2
+  shell: echo 'hi2'
+  notify:
+    - handler1
+```
+
 ./main-playbook.yaml
+```yaml
+- name: Test Playbook
+  hosts:
+    localhost
+  roles:
+    - role1
+
+  handlers:
+    - name: handler3
+      debug:
+        msg: "Handler3 has been invoked"
+```
