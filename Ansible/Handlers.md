@@ -17,17 +17,20 @@ roles/
 * Handlers are triggered by the `notify` property of tasks.
 * Handlers can only be invoked once per playbook execution no matter how many times the same handler has been notified.
 * Handlers can be notified through their `name` or `listen` properties. It is recommended to use the `listen` property.
+* Only tasks with state `changed` will notify handlers.
 
 ## Sample Handler
 ./roles/role1/handlers/handler1.yaml
 ```yaml
-- name: handler1
+- name: h1
   debug:
     msg: "Handler1 has been invoked"
+  listen: "handler1"
 
-- name: handler2
+- name: h2
   debug:
     msg: "Handler2 has been invoked"
+  listen: "handler2"
 ```
 
 ./roles/role1/tasks/main.yaml
@@ -35,12 +38,12 @@ roles/
 - name: test shell1
   shell: echo 'hi1'
   notify:
-    - handler3
+    - "handler3"
 
 - name: test shell2
   shell: echo 'hi2'
   notify:
-    - handler1
+    - "handler1"
 ```
 
 ./main-playbook.yaml
@@ -52,7 +55,8 @@ roles/
     - role1
 
   handlers:
-    - name: handler3
+    - name: h3
       debug:
         msg: "Handler3 has been invoked"
+      listen: "handler3"
 ```
