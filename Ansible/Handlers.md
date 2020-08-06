@@ -13,6 +13,8 @@ roles/
 ```
 
 * Handlers can be defined in the main playbook's `tasks` section as well.
+
+## Behaviour
 * Handlers of Roles will be executed before handlers that are defined in the main playbook.
 * Handlers are triggered by the `notify` property of tasks.
 * Handlers can only be invoked once per playbook execution no matter how many times the same handler has been notified.
