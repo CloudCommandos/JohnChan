@@ -13,13 +13,13 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 WORKDIR /azp
 
+SHELL ["powershell"]
+
 # Copy startup script into image
 COPY start.ps1 .
 
-# Copy 
-COPY agent.zip .
-
-SHELL ["powershell"]
+# Copy agent package to temp folder
+COPY agent.zip $Env:TEMP\agent.zip
 
 # Install Visual Studio
 RUN Invoke-WebRequest "https://aka.ms/vs/16/release/vs_community.exe" -OutFile "$Env:TEMP\vs_community.exe" -UseBasicParsing; \
@@ -42,30 +42,45 @@ echo '' > start.ps1
 ```
 ```powershell
 if (-not (Test-Path Env:AZP_AUTH_TYPE)) {
+  # Default authentication type set to 'Integrated'
   $Env:AZP_AUTH_TYPE = "Integrated"
 }
 if (-not ($Env:AZP_AUTH_TYPE -eq 'PAT' -or $Env:AZP_AUTH_TYPE -eq 'Integrated')) {
-  Write-Error "error: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'"
+  Write-Error "error: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'(default)"
   exit 1
 }
-Write-Host "The agent authentication type is $Env:AZP_AUTH_TYPE"
+Write-Host "The agent authentication type is `"$Env:AZP_AUTH_TYPE`""
+
+if (-not (Test-Path Env:AZP_RUN_ONCE)) {
+  # Default authentication type set to 'no'
+  $Env:AZP_RUN_ONCE = "no"
+}
+if (-not ($Env:AZP_RUN_ONCE -eq 'yes' -or $Env:AZP_RUN_ONCE -eq 'no')) {
+  Write-Error "error: AZP_RUN_ONCE environment variable should be either 'yes' or 'no'(default)"
+  exit 1
+}
+Write-Host "The agent run-once option is set to `"$Env:AZP_RUN_ONCE`""
 
 if (-not (Test-Path Env:AZP_URL)) {
   Write-Error "error: missing AZP_URL environment variable"
   exit 1
 }
 
-if (-not (Test-Path Env:AZP_TOKEN_FILE)) {
-  if (-not (Test-Path Env:AZP_TOKEN)) {
-    Write-Error "error: missing AZP_TOKEN environment variable"
-    exit 1
-  }
+if ($Env:AZP_AUTH_TYPE -eq 'PAT') {
+  if (-not (Test-Path Env:AZP_TOKEN_FILE)) {
+    if (-not (Test-Path Env:AZP_TOKEN)) {
+      Write-Error "error: missing AZP_TOKEN environment variable"
+      exit 1
+    }
 
-  $Env:AZP_TOKEN_FILE = "\azp\.token"
-  $Env:AZP_TOKEN | Out-File -FilePath $Env:AZP_TOKEN_FILE
+    $Env:AZP_TOKEN_FILE = "\azp\.token"
+    $Env:AZP_TOKEN | Out-File -FilePath $Env:AZP_TOKEN_FILE
+  }
 }
 
-Remove-Item Env:AZP_TOKEN
+if (Test-Path Env:AZP_TOKEN) {
+  Remove-Item Env:AZP_TOKEN
+}
 
 if ($Env:AZP_WORK -and -not (Test-Path Env:AZP_WORK)) {
   New-Item $Env:AZP_WORK -ItemType directory | Out-Null
@@ -78,87 +93,69 @@ $Env:VSO_AGENT_IGNORE = "AZP_TOKEN,AZP_TOKEN_FILE"
 
 Set-Location agent
 
-Write-Host "1. Determining matching Azure Pipelines agent..." -ForegroundColor Cyan
+Write-Host "2. Installing Azure Pipelines agent..." -ForegroundColor Cyan
 
-$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$(Get-Content ${Env:AZP_TOKEN_FILE})"))
-$package = Invoke-RestMethod -Headers @{Authorization=("Basic $base64AuthInfo")} "$(${Env:AZP_URL})/_apis/distributedtask/packages/agent?platform=win-x64&`$top=1"
-$packageUrl = $package[0].Value.downloadUrl
+Expand-Archive -Path "$Env:TEMP\agent.zip" -DestinationPath "\azp\agent"
 
-Write-Host $packageUrl
-
-Write-Host "2. Downloading and installing Azure Pipelines agent..." -ForegroundColor Cyan
-
-$wc = New-Object System.Net.WebClient
-$wc.DownloadFile($packageUrl, "$(Get-Location)\agent.zip")
-
-Expand-Archive -Path "agent.zip" -DestinationPath "\azp\agent"
-
+Write-Host "3. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
 if ($Env:AZP_AUTH_TYPE -eq 'Integrated') {
   try
   {
-    Write-Host "3. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
-    
     .\config.cmd --unattended `
       --agent "$(if (Test-Path Env:AZP_AGENT_NAME) { ${Env:AZP_AGENT_NAME} } else { ${Env:computername} })" `
       --url "$(${Env:AZP_URL})" `
-      --auth Integrated `
+      --auth $Env:AZP_AUTH_TYPE `
       --pool "$(if (Test-Path Env:AZP_POOL) { ${Env:AZP_POOL} } else { 'Default' })" `
       --work "$(if (Test-Path Env:AZP_WORK) { ${Env:AZP_WORK} } else { '_work' })" `
       --replace
     
     Write-Host "4. Running Azure Pipelines agent..." -ForegroundColor Cyan
-
-    .\run.cmd
+    
+    if ($Env:AZP_RUN_ONCE -eq 'yes') {
+      .\run.cmd --once
+    } else {
+      .\run.cmd
+    }
+    
   }
   finally
   {
     Write-Host "Cleanup. Removing Azure Pipelines agent..." -ForegroundColor Cyan
 
     .\config.cmd remove --unattended `
-      --auth Integrated"
+      --auth $Env:AZP_AUTH_TYPE"
   }
 } elseif ($Env:AZP_AUTH_TYPE -eq 'PAT') {
   try
   {
-    Write-Host "3. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
-  
-      .\config.cmd --unattended `
-        --agent "$(if (Test-Path Env:AZP_AGENT_NAME) { ${Env:AZP_AGENT_NAME} } else { ${Env:computername} })" `
-        --url "$(${Env:AZP_URL})" `
-        --auth PAT `
-        --token "$(Get-Content ${Env:AZP_TOKEN_FILE})" `
-        --pool "$(if (Test-Path Env:AZP_POOL) { ${Env:AZP_POOL} } else { 'Default' })" `
-        --work "$(if (Test-Path Env:AZP_WORK) { ${Env:AZP_WORK} } else { '_work' })" `
-        --replace
-    
-    } elseif ($Env:AZP_AUTH_TYPE -eq 'PAT') {
-      .\config.cmd --unattended `
-        --agent "$(if (Test-Path Env:AZP_AGENT_NAME) { ${Env:AZP_AGENT_NAME} } else { ${Env:computername} })" `
-        --url "$(${Env:AZP_URL})" `
-        --auth PAT `
-        --token "$(Get-Content ${Env:AZP_TOKEN_FILE})" `
-        --pool "$(if (Test-Path Env:AZP_POOL) { ${Env:AZP_POOL} } else { 'Default' })" `
-        --work "$(if (Test-Path Env:AZP_WORK) { ${Env:AZP_WORK} } else { '_work' })" `
-        --replace
 
-      # remove the administrative token before accepting work
-      Remove-Item $Env:AZP_TOKEN_FILE
+    .\config.cmd --unattended `
+      --agent "$(if (Test-Path Env:AZP_AGENT_NAME) { ${Env:AZP_AGENT_NAME} } else { ${Env:computername} })" `
+      --url "$(${Env:AZP_URL})" `
+      --auth $Env:AZP_AUTH_TYPE `
+      --token "$(Get-Content ${Env:AZP_TOKEN_FILE})" `
+      --pool "$(if (Test-Path Env:AZP_POOL) { ${Env:AZP_POOL} } else { 'Default' })" `
+      --work "$(if (Test-Path Env:AZP_WORK) { ${Env:AZP_WORK} } else { '_work' })" `
+      --replace
 
-    } else {
-      Write-Error "error2: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'"
-      exit 1
-    }
+    # remove the administrative token before accepting work
+    Remove-Item $Env:AZP_TOKEN_FILE
   
     Write-Host "4. Running Azure Pipelines agent..." -ForegroundColor Cyan
 
-    .\run.cmd
+    if ($Env:AZP_RUN_ONCE -eq 'yes') {
+      .\run.cmd --once
+    } else {
+      .\run.cmd
+    }
+    
   }
   finally
   {
     Write-Host "Cleanup. Removing Azure Pipelines agent..." -ForegroundColor Cyan
 
     .\config.cmd remove --unattended `
-      --auth PAT `
+      --auth $Env:AZP_AUTH_TYPE `
       --token "$(Get-Content ${Env:AZP_TOKEN_FILE})"
   }
   
