@@ -173,10 +173,10 @@ docker build --rm -t windows-agent:latest .
 ## Run the container
 If you want to run your container with `PAT` authentication
 ```powershell
-docker run -e AZP_AUTH_TYPE=PAT -e AZP_RUN_ONCE=no -e AZP_POOL=Default -e AZP_URL=<Azure DevOps instance> -e AZP_TOKEN=<PAT token> -e AZP_AGENT_NAME=windows-container-agent1 dockeragent:latest
+docker run -e AZP_AUTH_TYPE=PAT -e AZP_RUN_ONCE=no -e AZP_POOL=Default -e AZP_URL=<Azure DevOps instance> -e AZP_TOKEN=<PAT token> -e AZP_AGENT_NAME=windows-container-agent1 windows-agent:latest
 ```
 
 If you want to run your container with `Integrated` authentication
 ```powershell
-docker run -e AZP_AUTH_TYPE=Integrated -e AZP_RUN_ONCE=no -e AZP_POOL=Default -e AZP_URL=<Azure DevOps instance> -e AZP_AGENT_NAME=windows-container-agent1 dockeragent:latest
+docker run -e AZP_AUTH_TYPE=Integrated -e AZP_RUN_ONCE=no -e AZP_POOL=Default -e AZP_URL=<Azure DevOps instance> -e AZP_AGENT_NAME=windows-container-agent1 windows-agent:latest
 ```
