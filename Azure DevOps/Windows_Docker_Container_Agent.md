@@ -13,20 +13,24 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 WORKDIR /azp
 
+# Copy startup script into image
 COPY start.ps1 .
+
+# Copy 
+COPY agent.zip .
 
 SHELL ["powershell"]
 
 # Install Visual Studio
-RUN Invoke-WebRequest "https://aka.ms/vs/16/release/vs_community.exe" -OutFile "$env:TEMP\vs_community.exe" -UseBasicParsing; \
-    & "$env:TEMP\vs_community.exe" --add Microsoft.VisualStudio.Workload.Azure --quiet --wait --norestart --noUpdateInstaller | Out-Default; \
+RUN Invoke-WebRequest "https://aka.ms/vs/16/release/vs_community.exe" -OutFile "$Env:TEMP\vs_community.exe" -UseBasicParsing; \
+    & "$Env:TEMP\vs_community.exe" --add Microsoft.VisualStudio.Workload.Azure --quiet --wait --norestart --noUpdateInstaller | Out-Default; \
     & 'C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe' /version
 
 # Install Git
-RUN Invoke-WebRequest 'https://github.com/git-for-windows/git/releases/download/v2.12.2.windows.2/MinGit-2.12.2.2-64-bit.zip' -OutFile MinGit.zip; \
-    Expand-Archive c:\MinGit.zip -DestinationPath c:\MinGit; \
-    $env:PATH = $env:PATH + ';C:\MinGit\cmd\;C:\MinGit\cmd'; \
-    Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\' -Name Path -Value $env:PATH
+RUN Invoke-WebRequest 'https://github.com/git-for-windows/git/releases/download/v2.12.2.windows.2/MinGit-2.12.2.2-64-bit.zip' -OutFile "$Env:TEMP\MinGit.zip"; \
+    Expand-Archive "$Env:TEMP\MinGit.zip" -DestinationPath C:\MinGit; \
+    $Env:PATH = $Env:PATH + ';C:\MinGit\cmd\;C:\MinGit\cmd'; \
+    Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\' -Name Path -Value $Env:PATH
 
 CMD powershell .\start.ps1
 ```
@@ -37,6 +41,15 @@ You can use this powershell command to create the script first then edit the fil
 echo '' > start.ps1
 ```
 ```powershell
+if (-not (Test-Path Env:AZP_AUTH_TYPE)) {
+  $Env:AZP_AUTH_TYPE = "Integrated"
+}
+if (-not ($Env:AZP_AUTH_TYPE -eq 'PAT' -or $Env:AZP_AUTH_TYPE -eq 'Integrated')) {
+  Write-Error "error: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'"
+  exit 1
+}
+Write-Host "The agent authentication type is $Env:AZP_AUTH_TYPE"
+
 if (-not (Test-Path Env:AZP_URL)) {
   Write-Error "error: missing AZP_URL environment variable"
   exit 1
@@ -80,33 +93,78 @@ $wc.DownloadFile($packageUrl, "$(Get-Location)\agent.zip")
 
 Expand-Archive -Path "agent.zip" -DestinationPath "\azp\agent"
 
-try
-{
-  Write-Host "3. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
+if ($Env:AZP_AUTH_TYPE -eq 'Integrated') {
+  try
+  {
+    Write-Host "3. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
+    
+    .\config.cmd --unattended `
+      --agent "$(if (Test-Path Env:AZP_AGENT_NAME) { ${Env:AZP_AGENT_NAME} } else { ${Env:computername} })" `
+      --url "$(${Env:AZP_URL})" `
+      --auth Integrated `
+      --pool "$(if (Test-Path Env:AZP_POOL) { ${Env:AZP_POOL} } else { 'Default' })" `
+      --work "$(if (Test-Path Env:AZP_WORK) { ${Env:AZP_WORK} } else { '_work' })" `
+      --replace
+    
+    Write-Host "4. Running Azure Pipelines agent..." -ForegroundColor Cyan
 
-  .\config.cmd --unattended `
-    --agent "$(if (Test-Path Env:AZP_AGENT_NAME) { ${Env:AZP_AGENT_NAME} } else { ${Env:computername} })" `
-    --url "$(${Env:AZP_URL})" `
-    --auth PAT `
-    --token "$(Get-Content ${Env:AZP_TOKEN_FILE})" `
-    --pool "$(if (Test-Path Env:AZP_POOL) { ${Env:AZP_POOL} } else { 'Default' })" `
-    --work "$(if (Test-Path Env:AZP_WORK) { ${Env:AZP_WORK} } else { '_work' })" `
-    --replace
+    .\run.cmd
+  }
+  finally
+  {
+    Write-Host "Cleanup. Removing Azure Pipelines agent..." -ForegroundColor Cyan
 
-  # remove the administrative token before accepting work
-  Remove-Item $Env:AZP_TOKEN_FILE
+    .\config.cmd remove --unattended `
+      --auth Integrated"
+  }
+} elseif ($Env:AZP_AUTH_TYPE -eq 'PAT') {
+  try
+  {
+    Write-Host "3. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
+  
+      .\config.cmd --unattended `
+        --agent "$(if (Test-Path Env:AZP_AGENT_NAME) { ${Env:AZP_AGENT_NAME} } else { ${Env:computername} })" `
+        --url "$(${Env:AZP_URL})" `
+        --auth PAT `
+        --token "$(Get-Content ${Env:AZP_TOKEN_FILE})" `
+        --pool "$(if (Test-Path Env:AZP_POOL) { ${Env:AZP_POOL} } else { 'Default' })" `
+        --work "$(if (Test-Path Env:AZP_WORK) { ${Env:AZP_WORK} } else { '_work' })" `
+        --replace
+    
+    } elseif ($Env:AZP_AUTH_TYPE -eq 'PAT') {
+      .\config.cmd --unattended `
+        --agent "$(if (Test-Path Env:AZP_AGENT_NAME) { ${Env:AZP_AGENT_NAME} } else { ${Env:computername} })" `
+        --url "$(${Env:AZP_URL})" `
+        --auth PAT `
+        --token "$(Get-Content ${Env:AZP_TOKEN_FILE})" `
+        --pool "$(if (Test-Path Env:AZP_POOL) { ${Env:AZP_POOL} } else { 'Default' })" `
+        --work "$(if (Test-Path Env:AZP_WORK) { ${Env:AZP_WORK} } else { '_work' })" `
+        --replace
 
-  Write-Host "4. Running Azure Pipelines agent..." -ForegroundColor Cyan
+      # remove the administrative token before accepting work
+      Remove-Item $Env:AZP_TOKEN_FILE
 
-  .\run.cmd
-}
-finally
-{
-  Write-Host "Cleanup. Removing Azure Pipelines agent..." -ForegroundColor Cyan
+    } else {
+      Write-Error "error2: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'"
+      exit 1
+    }
+  
+    Write-Host "4. Running Azure Pipelines agent..." -ForegroundColor Cyan
 
-  .\config.cmd remove --unattended `
-    --auth PAT `
-    --token "$(Get-Content ${Env:AZP_TOKEN_FILE})"
+    .\run.cmd
+  }
+  finally
+  {
+    Write-Host "Cleanup. Removing Azure Pipelines agent..." -ForegroundColor Cyan
+
+    .\config.cmd remove --unattended `
+      --auth PAT `
+      --token "$(Get-Content ${Env:AZP_TOKEN_FILE})"
+  }
+  
+} else {
+  Write-Error "error2: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'"
+  exit 1
 }
 ```
 
