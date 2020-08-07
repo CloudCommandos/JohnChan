@@ -109,3 +109,8 @@ finally
     --token "$(Get-Content ${Env:AZP_TOKEN_FILE})"
 }
 ```
+
+Build the image
+```powershell
+docker build --rm -t windows-agent:latest .
+```
