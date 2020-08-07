@@ -19,7 +19,7 @@ SHELL ["powershell"]
 COPY start.ps1 .
 
 # Copy agent package to temp folder
-COPY agent.zip $Env:TEMP\agent.zip
+COPY agent.zip $Env:TEMP/agent.zip
 
 # Install Visual Studio
 RUN Invoke-WebRequest "https://aka.ms/vs/16/release/vs_community.exe" -OutFile "$Env:TEMP\vs_community.exe" -UseBasicParsing; \
