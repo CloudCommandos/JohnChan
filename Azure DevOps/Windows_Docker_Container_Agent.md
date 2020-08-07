@@ -18,8 +18,8 @@ SHELL ["powershell"]
 # Copy startup script into image
 COPY start.ps1 .
 
-# Copy agent package to temp folder
-COPY agent.zip $Env:TEMP/agent.zip
+# Copy agent package into image
+COPY agent.zip .
 
 # Install Visual Studio
 RUN Invoke-WebRequest "https://aka.ms/vs/16/release/vs_community.exe" -OutFile "$Env:TEMP\vs_community.exe" -UseBasicParsing; \
@@ -95,7 +95,7 @@ Set-Location agent
 
 Write-Host "2. Installing Azure Pipelines agent..." -ForegroundColor Cyan
 
-Expand-Archive -Path "$Env:TEMP\agent.zip" -DestinationPath "\azp\agent"
+Expand-Archive -Path "\azp\agent.zip" -DestinationPath "\azp\agent"
 
 Write-Host "3. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
 if ($Env:AZP_AUTH_TYPE -eq 'Integrated') {
