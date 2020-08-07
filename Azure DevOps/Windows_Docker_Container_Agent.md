@@ -123,7 +123,7 @@ if ($Env:AZP_AUTH_TYPE -eq 'Integrated') {
     Write-Host "Cleanup. Removing Azure Pipelines agent..." -ForegroundColor Cyan
 
     .\config.cmd remove --unattended `
-      --auth $Env:AZP_AUTH_TYPE"
+      --auth $Env:AZP_AUTH_TYPE
   }
 } elseif ($Env:AZP_AUTH_TYPE -eq 'PAT') {
   try
