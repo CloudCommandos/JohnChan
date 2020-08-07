@@ -18,8 +18,8 @@ COPY start.ps1 .
 # Install Visual Studio
 SHELL ["powershell"]
 RUN Invoke-WebRequest "https://aka.ms/vs/16/release/vs_community.exe" -OutFile "$env:TEMP\vs_community.exe" -UseBasicParsing
-RUN & "$env:TEMP\vs_community.exe" --add Microsoft.VisualStudio.Workload.NetWeb --quiet --wait --norestart --noUpdateInstaller | Out-Default
-RUN & 'C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe' /version
+RUN & "$env:TEMP\vs_community.exe" --add Microsoft.VisualStudio.Workload.Azure --quiet --wait --norestart --noUpdateInstaller | Out-Default
+RUN & 'C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe' /version
 
 CMD powershell .\start.ps1
 ```
