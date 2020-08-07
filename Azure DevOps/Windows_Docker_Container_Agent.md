@@ -4,6 +4,7 @@
 Create work directory with PowerShell
 ```powershell
 mkdir C:\dockeragent
+cd C:\dockeragent
 ```
 
 Create file `Dockerfile` with no extension
@@ -23,8 +24,12 @@ RUN & 'C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.
 CMD powershell .\start.ps1
 ```
 
-Create PowerShell script `start.ps1`
-```yaml
+Create PowerShell script `start.ps1`  
+You can use this powershell command to create the script first then edit the file with a text editor
+```powershell
+echo '' > start.ps1
+```
+```powershell
 if (-not (Test-Path Env:AZP_URL)) {
   Write-Error "error: missing AZP_URL environment variable"
   exit 1
