@@ -26,8 +26,8 @@ RUN Invoke-WebRequest 'https://github.com/git-for-windows/git/releases/download/
     $Env:PATH = $Env:PATH + ';C:\MinGit\cmd\;C:\MinGit\cmd'; \
     Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\' -Name Path -Value $Env:PATH
 
-# Copy agent package into image
-COPY agent.zip .
+# Copy extracted agent folder into image
+COPY agent .
 
 # Copy startup script into image
 COPY start.ps1 .
@@ -93,11 +93,7 @@ $Env:VSO_AGENT_IGNORE = "AZP_TOKEN,AZP_TOKEN_FILE"
 
 Set-Location agent
 
-Write-Host "2. Installing Azure Pipelines agent..." -ForegroundColor Cyan
-
-Expand-Archive -Path "\azp\agent.zip" -DestinationPath "\azp\agent"
-
-Write-Host "3. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
+Write-Host "2. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
 if ($Env:AZP_AUTH_TYPE -eq 'Integrated') {
   try
   {
@@ -109,7 +105,7 @@ if ($Env:AZP_AUTH_TYPE -eq 'Integrated') {
       --work "$(if (Test-Path Env:AZP_WORK) { ${Env:AZP_WORK} } else { '_work' })" `
       --replace
     
-    Write-Host "4. Running Azure Pipelines agent..." -ForegroundColor Cyan
+    Write-Host "3. Running Azure Pipelines agent..." -ForegroundColor Cyan
     
     if ($Env:AZP_RUN_ONCE -eq 'yes') {
       .\run.cmd --once
@@ -141,7 +137,7 @@ if ($Env:AZP_AUTH_TYPE -eq 'Integrated') {
     # remove the administrative token before accepting work
     Remove-Item $Env:AZP_TOKEN_FILE
   
-    Write-Host "4. Running Azure Pipelines agent..." -ForegroundColor Cyan
+    Write-Host "3. Running Azure Pipelines agent..." -ForegroundColor Cyan
 
     if ($Env:AZP_RUN_ONCE -eq 'yes') {
       .\run.cmd --once
