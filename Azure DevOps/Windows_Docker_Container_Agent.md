@@ -27,7 +27,7 @@ RUN Invoke-WebRequest 'https://github.com/git-for-windows/git/releases/download/
     Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\' -Name Path -Value $Env:PATH
 
 # Copy extracted agent folder into image
-COPY agent .
+COPY agent ./agent
 
 # Copy startup script into image
 COPY start.ps1 .
@@ -41,6 +41,7 @@ You can use this powershell command to create the script first then edit the fil
 echo '' > start.ps1
 ```
 ```powershell
+Write-Host "1. Checking environment variables..." -ForegroundColor Cyan
 if (-not (Test-Path Env:AZP_AUTH_TYPE)) {
   # Default authentication type set to 'Integrated'
   $Env:AZP_AUTH_TYPE = "Integrated"
@@ -86,11 +87,12 @@ if ($Env:AZP_WORK -and -not (Test-Path Env:AZP_WORK)) {
   New-Item $Env:AZP_WORK -ItemType directory | Out-Null
 }
 
-New-Item "\azp\agent" -ItemType directory | Out-Null
-
 # Let the agent ignore the token env variables
 $Env:VSO_AGENT_IGNORE = "AZP_TOKEN,AZP_TOKEN_FILE"
 
+if (-not (Test-Path "\azp\agent")){
+  New-Item "\azp\agent" -ItemType directory | Out-Null
+}
 Set-Location agent
 
 Write-Host "2. Configuring Azure Pipelines agent..." -ForegroundColor Cyan
