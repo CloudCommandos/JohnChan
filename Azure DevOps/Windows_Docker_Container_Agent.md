@@ -15,12 +15,6 @@ WORKDIR /azp
 
 SHELL ["powershell"]
 
-# Copy startup script into image
-COPY start.ps1 .
-
-# Copy agent package into image
-COPY agent.zip .
-
 # Install Visual Studio
 RUN Invoke-WebRequest "https://aka.ms/vs/16/release/vs_community.exe" -OutFile "$Env:TEMP\vs_community.exe" -UseBasicParsing; \
     & "$Env:TEMP\vs_community.exe" --add Microsoft.VisualStudio.Workload.Azure --quiet --wait --norestart --noUpdateInstaller | Out-Default; \
@@ -31,6 +25,12 @@ RUN Invoke-WebRequest 'https://github.com/git-for-windows/git/releases/download/
     Expand-Archive "$Env:TEMP\MinGit.zip" -DestinationPath C:\MinGit; \
     $Env:PATH = $Env:PATH + ';C:\MinGit\cmd\;C:\MinGit\cmd'; \
     Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\' -Name Path -Value $Env:PATH
+
+# Copy agent package into image
+COPY agent.zip .
+
+# Copy startup script into image
+COPY start.ps1 .
 
 CMD powershell .\start.ps1
 ```
@@ -46,7 +46,7 @@ if (-not (Test-Path Env:AZP_AUTH_TYPE)) {
   $Env:AZP_AUTH_TYPE = "Integrated"
 }
 if (-not ($Env:AZP_AUTH_TYPE -eq 'PAT' -or $Env:AZP_AUTH_TYPE -eq 'Integrated')) {
-  Write-Error "error: AZP_AUTH_TYPE environment variable should be either `"PAT`" or `"Integrated`"(default)"
+  Write-Error "error: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'"
   exit 1
 }
 Write-Host "The agent authentication type is `"$Env:AZP_AUTH_TYPE`""
@@ -56,7 +56,7 @@ if (-not (Test-Path Env:AZP_RUN_ONCE)) {
   $Env:AZP_RUN_ONCE = "no"
 }
 if (-not ($Env:AZP_RUN_ONCE -eq 'yes' -or $Env:AZP_RUN_ONCE -eq 'no')) {
-  Write-Error "error: AZP_RUN_ONCE environment variable should be either 'yes' or 'no'(default)"
+  Write-Error "error: AZP_RUN_ONCE environment variable should be either 'yes' or 'no'"
   exit 1
 }
 Write-Host "The agent run-once option is set to `"$Env:AZP_RUN_ONCE`""
@@ -160,7 +160,7 @@ if ($Env:AZP_AUTH_TYPE -eq 'Integrated') {
   }
   
 } else {
-  Write-Error "error2: AZP_AUTH_TYPE environment variable should be either `"PAT`" or `"Integrated`""
+  Write-Error "error2: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'"
   exit 1
 }
 ```
