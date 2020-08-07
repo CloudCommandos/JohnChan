@@ -15,11 +15,18 @@ WORKDIR /azp
 
 COPY start.ps1 .
 
-# Install Visual Studio
 SHELL ["powershell"]
-RUN Invoke-WebRequest "https://aka.ms/vs/16/release/vs_community.exe" -OutFile "$env:TEMP\vs_community.exe" -UseBasicParsing
-RUN & "$env:TEMP\vs_community.exe" --add Microsoft.VisualStudio.Workload.Azure --quiet --wait --norestart --noUpdateInstaller | Out-Default
-RUN & 'C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe' /version
+
+# Install Visual Studio
+RUN Invoke-WebRequest "https://aka.ms/vs/16/release/vs_community.exe" -OutFile "$env:TEMP\vs_community.exe" -UseBasicParsing; \
+    & "$env:TEMP\vs_community.exe" --add Microsoft.VisualStudio.Workload.Azure --quiet --wait --norestart --noUpdateInstaller | Out-Default; \
+    & 'C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe' /version
+
+# Install Git
+RUN Invoke-WebRequest 'https://github.com/git-for-windows/git/releases/download/v2.12.2.windows.2/MinGit-2.12.2.2-64-bit.zip' -OutFile MinGit.zip; \
+    Expand-Archive c:\MinGit.zip -DestinationPath c:\MinGit; \
+    $env:PATH = $env:PATH + ';C:\MinGit\cmd\;C:\MinGit\cmd'; \
+    Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\' -Name Path -Value $env:PATH
 
 CMD powershell .\start.ps1
 ```
