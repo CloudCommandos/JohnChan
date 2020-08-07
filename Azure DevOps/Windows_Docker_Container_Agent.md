@@ -46,7 +46,7 @@ if (-not (Test-Path Env:AZP_AUTH_TYPE)) {
   $Env:AZP_AUTH_TYPE = "Integrated"
 }
 if (-not ($Env:AZP_AUTH_TYPE -eq 'PAT' -or $Env:AZP_AUTH_TYPE -eq 'Integrated')) {
-  Write-Error "error: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'(default)"
+  Write-Error "error: AZP_AUTH_TYPE environment variable should be either `"PAT`" or `"Integrated`"(default)"
   exit 1
 }
 Write-Host "The agent authentication type is `"$Env:AZP_AUTH_TYPE`""
@@ -160,7 +160,7 @@ if ($Env:AZP_AUTH_TYPE -eq 'Integrated') {
   }
   
 } else {
-  Write-Error "error2: AZP_AUTH_TYPE environment variable should be either 'PAT' or 'Integrated'"
+  Write-Error "error2: AZP_AUTH_TYPE environment variable should be either `"PAT`" or `"Integrated`""
   exit 1
 }
 ```
