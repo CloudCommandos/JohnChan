@@ -33,9 +33,9 @@ apt install -y nodejs npm
 npm install npm --global
 ```
 
-Install git, pwgen, and vim
+Install git and pwgen
 ```bash
-apt install -y git pwgen vim
+apt install -y git pwgen
 pip3 install requests==2.14.2
 ```
 
@@ -49,4 +49,22 @@ Make a directory for Ansible AWX git repository, then clone it
 mkdir -p /opt/awx
 cd /opt/awx
 git clone --depth 50 https://github.com/ansible/awx.git
+cd awx/installer/
+```
+
+Generate a secret key
+```bash
+pwgen -N 1 -s 30
+```
+
+Edit `inventory` file
+```bash
+nano inventory
+```
+
+Assign the generated secret key to the `secret_key` variable
+```yaml
+...
+secret_key=gQ5FYKzMORpyRrPO2N7y7h0qODQHIU
+...
 ```
