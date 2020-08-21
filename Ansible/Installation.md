@@ -62,9 +62,14 @@ Edit `inventory` file
 nano inventory
 ```
 
-Assign the generated secret key to the `secret_key` variable
+Assign the generated secret key to the `secret_key` variable. Configure other parameters where applicable.
 ```yaml
 ...
 secret_key=gQ5FYKzMORpyRrPO2N7y7h0qODQHIU
 ...
+```
+
+Install with Ansible
+```bash
+ansible-playbook -i inventory install.yml
 ```
