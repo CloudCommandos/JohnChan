@@ -8,7 +8,7 @@ Install Ansible through pip
 ```bash
 apt update
 apt install -y python3-pip
-pip3 --default-timeout=1000 install ansible
+pip3 --timeout=1000 install ansible
 ```
 
 
