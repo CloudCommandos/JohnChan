@@ -72,7 +72,7 @@ string_var3: '"12345"'
 # Integer
 integer_var1: 12345
 
-# Object and Array
+# Object and List
 object_var:
     property1: I am string
     property2:
@@ -81,7 +81,7 @@ object_var:
     property3:
         - I
         - am
-        - array
+        - List
 
 # Dictionary             
 dict_var:
