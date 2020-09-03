@@ -36,7 +36,6 @@ npm install npm --global
 Install git and pwgen
 ```bash
 apt install -y git pwgen
-pip3 install requests==2.14.2
 ```
 
 Install Docker-Compose Python Module that matches your Docker-Compose Version
