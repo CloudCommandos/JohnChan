@@ -2,9 +2,17 @@ Use Root User
 ```bash
 sudo su -
 ```
+## Ansible Python2
+```bash
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:ansible/ansible-2.8
+sudo apt-get update
+sudo apt-get install ansible
+```
 
-## Ansible
-Install Ansible through pip
+
+## Ansible Python3
+Install Ansible through pip3
 ```bash
 apt update
 apt install -y python3-pip
