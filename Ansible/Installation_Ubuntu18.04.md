@@ -5,7 +5,7 @@ sudo su -
 ## Ansible Python2
 ```bash
 sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:ansible/ansible-2.8
+sudo add-apt-repository ppa:ansible/ansible
 sudo apt-get update
 sudo apt-get install ansible
 ```
