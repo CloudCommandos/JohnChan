@@ -2,7 +2,7 @@ Use Root User
 ```bash
 sudo su -
 ```
-## Ansible Python2
+## Ansible Python3
 ```bash
 sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:ansible/ansible
@@ -11,7 +11,7 @@ sudo apt-get install ansible
 ```
 
 
-## Ansible Python3
+## Ansible Python3 (Alternative)
 Install Ansible through pip3
 ```bash
 apt update
