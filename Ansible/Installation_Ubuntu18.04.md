@@ -30,9 +30,7 @@ pip3 install ansible
 
 Install Docker-Compose
 ```bash
-curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-docker-compose version
+apt install docker-compose
 ```
 
 Install Node and NPM
@@ -48,7 +46,7 @@ apt install -y git pwgen
 
 Install Docker-Compose Python Module that matches your Docker-Compose Version
 ```bash
-pip3 install docker-compose==1.26.2
+pip3 install docker-compose==1.17.1
 ```
 
 Make a directory for Ansible AWX git repository, then clone it
