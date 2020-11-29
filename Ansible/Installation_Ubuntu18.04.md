@@ -28,6 +28,11 @@ apt install -y python3-pip
 pip3 install ansible
 ```
 
+Install pip docker-py
+```bash
+pip3 install docker-py
+```
+
 Install Docker-Compose
 ```bash
 apt install docker-compose
